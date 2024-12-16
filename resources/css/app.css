@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (max-width: 768px) {
+  #sidebar.expanded {
+    width: 50% !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1023px) {
+  #sidebar {
+    width: 4rem !important;
+  }
+
+  #main-content {
+    margin-left: 4rem !important;
+  }
+}
+
+.sidebar-text {
+  transition:
+    opacity 0.3s ease,
+    width 0.3s ease;
+  white-space: nowrap;
+}

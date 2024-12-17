@@ -60,19 +60,32 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::middleware('role:customer')->group(function () {
-        //Endpoint: /api/customer
-        Route::get('/customer', function () {
-            return "Hello Customer";
-        });
-
-        //customer routes :
+        // Customer-specific endpoints
         Route::prefix('customer')->group(function () {
             Route::prefix('orders')->group(function () {
-                Route::get('/', [OrderController::class, 'index']); // List all orders
-                Route::get('/{id}', [OrderController::class, 'show']); // View a specific order
-                Route::post('/', [OrderController::class, 'store']); // Place a new order
-                Route::put('/{id}', [OrderController::class, 'update']); // Update order status
+                // List all orders for the authenticated customer
+                Route::get('/', [OrderController::class, 'index']);
+    
+                // View a specific order
+                Route::get('/{id}', [OrderController::class, 'show'])
+                    ->where('id', '[0-9]+'); // Ensure 'id' is numeric
+    
+                // Place a new order
+                Route::post('/', [OrderController::class, 'store']);
+    
+                // Update an existing order (e.g., status update)
+                Route::put('/{id}', [OrderController::class, 'update'])
+                    ->where('id', '[0-9]+');
+    
+                // Cancel an order
+                Route::patch('/{id}/cancel', [OrderController::class, 'cancelOrder'])
+                    ->where('id', '[0-9]+');
+    
+                // Delete an order
+                Route::delete('/{id}', [OrderController::class, 'destroy'])
+                    ->where('id', '[0-9]+');
             });
+    
 
             // show all products
             Route::get('products', [ProductController::class, 'index']);

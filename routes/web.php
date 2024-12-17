@@ -62,7 +62,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/{product}/edit', function (Product $product) {
             $categories = Category::orderBy('name')->get();
-            return view('dashboard.products.create', compact('product',  'categories'));
+            return view('dashboard.products.edit', compact('product',  'categories'));
         })->name('products.edit');
 
         Route::delete('/{product}', function (Product $product) {
